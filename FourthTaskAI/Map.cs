@@ -22,15 +22,12 @@
         internal void Start()
         {
             FillingMap();
-            int countStep_ = countStep - 1;
             while (countStep <= 9 && status == 1)
-            {  
-                if(countStep != countStep_)
-                {
-                    Update();
-                    countStep_ = countStep;
-                }
+            {
+                Update();
             }
+            Thread.Sleep(200);
+            Restart();
         }
         internal void FillingMap()
         {
@@ -60,20 +57,21 @@
         {
             Player currentPlayer = TurnPlayer();
             Show(currentPlayer);
-            GetTurn();
-
+            uint index = GetTurn();
+            SetValueMap(index, currentPlayer);
+            countStep++;
             if (countStep >= 5)
                 CheckedWin(currentPlayer);
-            countStep++;
+            
         }
-        private void GetTurn()
+        private uint GetTurn()
         {
             uint Turn;
             do
             {
-               Turn = Convert.ToUInt32(Console.ReadLine());
+               Turn = Convert.ToUInt32(Console.ReadLine()) - 1;
             } while (!RulseTurn(Turn));
-            countStep++;
+            return Turn;
         }
         private void CheckedWin(Player currentPlayer)
         {
@@ -109,22 +107,33 @@
             {
                 ShowDraw();
             }
-            if(currentPlayer == player1)
-            {
-                player1.AddCountWin();
-                player2.AddCountLose();
-                ShowWinner(player1);
-            }
             else
             {
-                player2.AddCountWin();
-                player1.AddCountLose();
-                ShowWinner(player2);
+                if (currentPlayer == player1)
+                {
+                    player1.AddCountWin();
+                    player2.AddCountLose();
+                    ShowWinner(player1);
+                }
+                else
+                {
+                    player2.AddCountWin();
+                    player1.AddCountLose();
+                    ShowWinner(player2);
+                }
             }
             countGames++;
             status = 0;
         }
         private bool RulseTurn(uint index)
             => cell[index].value == Empty.value;
+        private void SetValueMap(uint index, Player currentPlayer)
+            => cell[index] = currentPlayer.team;
+        private void Restart()
+        {
+            countStep = 0;
+            status = 1;
+            Start();
+        }
     }
 }
