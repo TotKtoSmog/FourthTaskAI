@@ -4,11 +4,13 @@
     {
         private Player player1;
         private Player player2;
-        private Cell Empty;
-        private Cell[] cell;
+        static private Cell Empty;
+        static private Cell[] cell;
         private uint countGames;
         private ushort status;
         private ushort countStep;
+        static internal Cell[] getMap() => cell;
+        static internal Cell getEmpty() => Empty;
         internal Map(Player player1, Player player2) 
         { 
             cell = new Cell[9];
@@ -57,21 +59,12 @@
         {
             Player currentPlayer = TurnPlayer();
             Show(currentPlayer);
-            uint index = GetTurn();
+            uint index = currentPlayer.Turn();
             SetValueMap(index, currentPlayer);
             countStep++;
             if (countStep >= 5)
                 CheckedWin(currentPlayer);
             
-        }
-        private uint GetTurn()
-        {
-            uint Turn;
-            do
-            {
-               Turn = Convert.ToUInt32(Console.ReadLine()) - 1;
-            } while (!RulseTurn(Turn));
-            return Turn;
         }
         private void CheckedWin(Player currentPlayer)
         {
@@ -109,24 +102,14 @@
             }
             else
             {
-                if (currentPlayer == player1)
-                {
-                    player1.AddCountWin();
-                    player2.AddCountLose();
-                    ShowWinner(player1);
-                }
-                else
-                {
-                    player2.AddCountWin();
-                    player1.AddCountLose();
-                    ShowWinner(player2);
-                }
+                currentPlayer.AddCountWin();
+                if (currentPlayer != player1) player2.AddCountLose();               
+                else player1.AddCountLose();
+                ShowWinner(currentPlayer);
             }
             countGames++;
             status = 0;
         }
-        private bool RulseTurn(uint index)
-            => cell[index].value == Empty.value;
         private void SetValueMap(uint index, Player currentPlayer)
             => cell[index] = currentPlayer.team;
         private void Restart()
