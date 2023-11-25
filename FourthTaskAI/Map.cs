@@ -6,9 +6,10 @@
         private Player player2;
         static private Cell Empty;
         static private Cell[] cell;
-        private uint countGames;
+        static private int countGames;
         private ushort status;
         private ushort countStep;
+        static internal int getCountGame() => countGames;
         static internal Cell[] getMap() => cell;
         static internal Cell getEmpty() => Empty;
         internal Map(Player player1, Player player2) 
@@ -23,13 +24,17 @@
         }
         internal void Start()
         {
-            FillingMap();
-            while (countStep <= 9 && status == 1)
+            if(countGames <= 10)
             {
-                Update();
+                FillingMap();
+                while (countStep <= 9 && status == 1)
+                {
+                    Update();
+                }
+                Thread.Sleep(500);
+                Restart();
             }
-            Thread.Sleep(200);
-            Restart();
+            Console.WriteLine("Игра окончена");
         }
         internal void FillingMap()
         {
@@ -103,7 +108,7 @@
             else
             {
                 currentPlayer.AddCountWin();
-                if (currentPlayer != player1) player2.AddCountLose();               
+                if (currentPlayer.team == player1.team) player2.AddCountLose();               
                 else player1.AddCountLose();
                 ShowWinner(currentPlayer);
             }

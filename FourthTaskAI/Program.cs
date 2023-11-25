@@ -12,6 +12,7 @@
             PlayerAI pAI = new PlayerAI(new Cell(2, '0'), "fff");
             Map game = new Map(p1, pAI);
             game.Start();
+            pAI.saveTable();
             Console.WriteLine("бебеб");
 
         }

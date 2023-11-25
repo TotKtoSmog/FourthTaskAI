@@ -25,7 +25,7 @@
         }
         internal uint GetCountWin() => countWin;
         internal uint GetCountLose() => countLose;
-        internal void AddCountWin() => countWin++;
-        internal void AddCountLose() => countLose++;
+        internal virtual void AddCountWin() => countWin++;
+        internal virtual void AddCountLose() => countLose++;
     }
 }
