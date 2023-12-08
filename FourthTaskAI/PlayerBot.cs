@@ -1,6 +1,4 @@
-﻿using System.Formats.Asn1;
-
-namespace FourthTaskAI
+﻿namespace FourthTaskAI
 {
     internal class PlayerBot : Player
     {
@@ -31,10 +29,7 @@ namespace FourthTaskAI
             if(temp_map.Count(n => n == team) > 1)
                 index = GetWinPosition(position);
             if(index == -1)
-            {
-                Random random = new Random();
-                index = random.Next(position.Count);
-            }
+                index = new Random().Next(position.Count);
             return (uint)position[index];
         }
         internal override uint Turn()

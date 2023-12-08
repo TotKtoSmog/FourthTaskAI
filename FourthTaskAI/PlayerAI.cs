@@ -7,9 +7,9 @@
         private int[] steps_m;
         private int step;
         private int countGame = 0;
-        private const double standartW = 0.3;
-        private const double A = 0.3;
-        private const string path = "tableV.txt";
+        private const double standartW = 0.5;
+        private const double A = 0.01;
+        private const string path = "tableV3.txt";
         internal PlayerAI(Cell team, string name) : base(team, name)
         {
             this.name = name;

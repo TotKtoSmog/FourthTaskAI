@@ -24,15 +24,13 @@
         }
         internal void Start()
         {
-            if(countGames <= 10)
+            if(countGames <= 10000)
             {
                 FillingMap();
                 while (countStep <= 9 && status == 1)
-                {
                     Update();
-                }
-                Console.WriteLine("Игра окончена");
-                Thread.Sleep(2000);
+                //Console.WriteLine("Игра окончена");
+                //Thread.Sleep(2000);
                 Restart();
             }
         }
@@ -64,13 +62,17 @@
         internal void Update()
         {
             Player currentPlayer = TurnPlayer();
-            Show(currentPlayer);
+            //Show(currentPlayer);
             uint index = currentPlayer.Turn();
             SetValueMap(index, currentPlayer);
             countStep++;
             if (countStep >= 5)
                 CheckedWin(currentPlayer);
             
+        }
+        internal void ShowStatistic()
+        {
+            Console.WriteLine($"Сыграно игр : {countGames} | игрок {player1.name} = {player1.GetCountWin()} | игрок  {player2.name} = {player2.GetCountWin()}");
         }
         internal static bool CheckedWinPlayer(Player currentPlayer, Cell[] cells) 
         {
@@ -108,14 +110,14 @@
         {
             if(currentPlayer == null)
             {
-                ShowDraw();
+                //ShowDraw();
             }
             else
             {
                 currentPlayer.AddCountWin();
                 if (currentPlayer.team == player1.team) player2.AddCountLose();               
                 else player1.AddCountLose();
-                ShowWinner(currentPlayer);
+                //ShowWinner(currentPlayer);
             }
             countGames++;
             status = 0;

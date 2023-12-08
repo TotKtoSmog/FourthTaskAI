@@ -11,10 +11,15 @@
             
             PlayerAI pAI = new PlayerAI(new Cell(2, '0'), "PlayerAI");
             PlayerBot pBot = new PlayerBot(new Cell(1, 'X'), "Bot");
-            Map game = new Map(pBot, pAI);
-            game.Start();
+            
+            for (int i = 0; i < 10; i++)
+            {
+                Map game = new Map(pBot, pAI);
+                game.Start();
+                game.ShowStatistic();
+            }
+            
             pAI.saveTable();
-            Console.WriteLine("бебеб");
 
         }
     }
