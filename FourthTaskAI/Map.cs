@@ -31,10 +31,10 @@
                 {
                     Update();
                 }
-                Thread.Sleep(500);
+                Console.WriteLine("Игра окончена");
+                Thread.Sleep(2000);
                 Restart();
             }
-            Console.WriteLine("Игра окончена");
         }
         internal void FillingMap()
         {
@@ -59,6 +59,7 @@
                     Console.WriteLine();
                 Console.Write($"{cell[i].texture} ");
             }
+            Console.WriteLine();
         }
         internal void Update()
         {
@@ -71,33 +72,37 @@
                 CheckedWin(currentPlayer);
             
         }
-        private void CheckedWin(Player currentPlayer)
+        internal static bool CheckedWinPlayer(Player currentPlayer, Cell[] cells) 
         {
             int currentPV = currentPlayer.team.value;
-            if (cell[0].value == currentPV && cell[1].value == currentPV && cell[2].value == currentPV ||
-                cell[3].value == currentPV && cell[4].value == currentPV && cell[5].value == currentPV ||
-                cell[6].value == currentPV && cell[7].value == currentPV && cell[8].value == currentPV ||
-                cell[0].value == currentPV && cell[4].value == currentPV && cell[8].value == currentPV ||
-                cell[2].value == currentPV && cell[4].value == currentPV && cell[6].value == currentPV ||
-                cell[0].value == currentPV && cell[3].value == currentPV && cell[6].value == currentPV ||
-                cell[1].value == currentPV && cell[4].value == currentPV && cell[7].value == currentPV ||
-                cell[2].value == currentPV && cell[5].value == currentPV && cell[8].value == currentPV )
+            if (cells[0].value == currentPV && cells[1].value == currentPV && cells[2].value == currentPV ||
+                cells[3].value == currentPV && cells[4].value == currentPV && cells[5].value == currentPV ||
+                cells[6].value == currentPV && cells[7].value == currentPV && cells[8].value == currentPV ||
+                cells[0].value == currentPV && cells[4].value == currentPV && cells[8].value == currentPV ||
+                cells[2].value == currentPV && cells[4].value == currentPV && cells[6].value == currentPV ||
+                cells[0].value == currentPV && cells[3].value == currentPV && cells[6].value == currentPV ||
+                cells[1].value == currentPV && cells[4].value == currentPV && cells[7].value == currentPV ||
+                cells[2].value == currentPV && cells[5].value == currentPV && cells[8].value == currentPV)
             {
-                EndGame(currentPlayer);
+                return true;
             }
+            else return false;
+        }
+        private void CheckedWin(Player currentPlayer)
+        {
+            if (CheckedWinPlayer(currentPlayer, cell))
+                EndGame(currentPlayer);
             if(countStep == 9)
                 EndGame(null);
         }
         private void ShowWinner(Player currentPlayer)
         {
-            Console.WriteLine($"Победил игрок: {currentPlayer.name}, играющий: {currentPlayer.team.texture}");
-            Console.WriteLine($"Итоговый счет: {player1.name} = {player1.GetCountWin() } | {player2.name} = {player2.GetCountWin()}");
-            ShowMap();
+            Show(currentPlayer);
+            Console.WriteLine($"Поедил {currentPlayer.team.texture} поздравим {currentPlayer.name}");
         }
         private void ShowDraw()
         {
             Console.WriteLine("Победила дружба");
-            ShowMap();
         }
         private void EndGame(Player currentPlayer)
         {

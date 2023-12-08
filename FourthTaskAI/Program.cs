@@ -9,8 +9,9 @@
             Player p2 = new Player(new Cell(2, '0'), "fff");
             
             
-            PlayerAI pAI = new PlayerAI(new Cell(2, '0'), "fff");
-            Map game = new Map(p1, pAI);
+            PlayerAI pAI = new PlayerAI(new Cell(2, '0'), "PlayerAI");
+            PlayerBot pBot = new PlayerBot(new Cell(1, 'X'), "Bot");
+            Map game = new Map(pBot, pAI);
             game.Start();
             pAI.saveTable();
             Console.WriteLine("бебеб");

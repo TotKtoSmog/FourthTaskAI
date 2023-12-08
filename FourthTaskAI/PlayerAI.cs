@@ -1,9 +1,4 @@
-﻿using System.ComponentModel.Design.Serialization;
-using System.Numerics;
-using System.Runtime.CompilerServices;
-using static System.Net.Mime.MediaTypeNames;
-
-namespace FourthTaskAI
+﻿namespace FourthTaskAI
 {
     internal class PlayerAI : Player
     {
@@ -68,7 +63,6 @@ namespace FourthTaskAI
         {
             if (countGame != Map.getCountGame())
                 resetValue();
-            int flag;
             int c_var = 0;
             for (int j = 0; j < 9; j++)
             {
